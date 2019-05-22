@@ -1,0 +1,56 @@
+# Snorlax CLI is a an assistant, written to provide help in simple tasks
+# Created by Artyom Trubin, student of NAU
+
+if __name__ == "__main__": # Main function
+
+	# Including modules:
+	from os import listdir # Importing this for work with directories
+	from os.path import isfile, join
+
+	# Importing additional files
+	onlyfiles = [f for f in listdir("addons/") if isfile(join("addons/", f))]
+
+	# Output files that were inmported
+	print(onlyfiles)
+
+	# Vocabulary of commands available
+	commands = {}
+
+	# Commands assembling block
+	for module in onlyfiles:
+		if module[-3:] != ".py":
+			continue
+		if module.startswith("_"):
+			continue
+		module_name = module.split(".")
+		exec("import addons." + module[:-3])
+		exec("obj = addons." + module[:-3] + ".Command()")
+		commands[obj.name] = obj
+	print(commands)
+
+	# ==========
+	# Main block
+	# ==========
+
+	print("""
+     ^ ^
+ ("\\(-_-)/")
+  ((     ))
+((...) (...))""")
+	print("===============")
+	print("  Snorlax CLI")
+	print("===============")
+	print("Greetings traveler! What can I do for you?")
+
+	loop = True # A variable for exiting the main loop
+	while loop: # Start of the main loop
+		ask = str(input())
+		ask_list = ask.split()
+		ask_command = str(ask_list[0])
+		if ask_command not in commands:
+			print("Sadly, I am not sure what to do with a task you gave me.")
+		else:
+			ask_list.pop(0)
+			commands[ask_command].functio
+clear
+
