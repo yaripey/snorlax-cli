@@ -1,5 +1,5 @@
 class Command:
 	name = "unnamed"
-	desc = "Разработчик не предоставил описание для этого модуля."
+	desc = "Developer needs to provide description to this module."
 	def function(self, user_input):
-		print("Функция не определена.")
+		print("Function is undefined")

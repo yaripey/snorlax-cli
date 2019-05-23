@@ -1,27 +1,27 @@
-# sendmail v0.3
+# sendmail v0.4
 
 from getpass import getpass
 import smtplib, ssl
 import addons._example
 class Command(addons._example.Command):
 	name = "sendmail"
-	desc = "Позвляет отправлять почту с ящика Gmail."
+	desc = "Allows you to send Gmail letters."
 	def function(self, user_input):
-		print("Введите вашу почту gmail:")
+		print("Enter your gmail:")
 		mylogin = input()
-		mypass = getpass('Введите ваш пароль:')
-		print("Ввелите тему письма:")
+		mypass = getpass('Enter you password:')
+		print("Enter you email topic:")
 		subject = input()
-		print("Введите сообщение, которое вы хотите отправить:")
-		massage = input()
+		print("Enter your message:")
+		message = input()
 		choice = 0
 		while choice != "Y" and choice != "y":
-			print("Ваше сообщение:")
-			print(massage)
+			print("Your message:")
+			print(message)
 			print()
-			print("Вы довольны вашем сообщением? [Y/n]")
+			print("Are you okay with your message? [Y/n]")
 			choice = input()
-		print("Введите почту получателя:")
+		print("Enter reciever email:")
 		reciever = input()
 
 		context = ssl.create_default_context()
@@ -29,7 +29,7 @@ class Command(addons._example.Command):
 			server = smtplib.SMTP("smtp.gmail.com", 587)
 			server.starttls(context=context)
 			server.login(mylogin, mypass)
-			fullmessage = "Subject: "+subject+"\n"+massage
+			fullmessage = "Subject: "+subject+"\n"+message
 			server.sendmail(mylogin, reciever, fullmessage)
 		except Exception as error:
 			print(error)

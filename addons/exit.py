@@ -1,8 +1,8 @@
-# Version: 1.0
+# Version: 1.1
 
 import addons._example
 class Command(addons._example.Command):
 	name = "exit"
 	def function(self, user_input):
-		print("Выход из программы")
+		print("Good bye!")
 		return 1

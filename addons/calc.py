@@ -1,15 +1,13 @@
-# Version: 1.0
-# to-do list:
-# Добавить возможность обрабатывать запросы с пробелами
+# Version: 1.1
 
 
 import addons._example
 class Command(addons._example.Command):
 	name = "calc"
-	desc = "Вычисление простых математических выражений.\nМожно использовать знаки +, -, /, * и %, а также скобки."
+	desc = "Calculating simple mathemical expressions.\nYou can use +, -, /, * и %, and also ( )."
 	def function(self, user_input):
 		if len(user_input) > 1:
-			print("Некорректный ввод, попробуйте ещё раз.")
+			print("Expression incorrect, please try again.")
 		print(eval(str(user_input[0])))
 	
 

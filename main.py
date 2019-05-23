@@ -57,7 +57,7 @@ if __name__ == "__main__": # Главная функция
 
 	loop = True # Условие выхода из цикла
 	while loop: # Старт главного цикла
-		print("Чем могу помочь?")
+		print("How can I help you?")
 		# Ответ пользователя
 		ask = str(input())
 		# Разбиваем его на список
@@ -66,7 +66,7 @@ if __name__ == "__main__": # Главная функция
 		ask_command = str(ask_list[0])
 		# Если такой команды нет в списке, извиняемся
 		if ask_command not in commands:
-			print(" К сожалению, я не знаю такой команды")
+			print("Sorry, I don't know such command.")
 		else:
 			# Удаляем первый элемент из строки-запроса
 			ask_list.pop(0)
