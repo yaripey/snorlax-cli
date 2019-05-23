@@ -1,36 +1,37 @@
-# Version: 0.1
+# sendmail v0.3
 
 from getpass import getpass
-import smtplib
+import smtplib, ssl
 import addons._example
 class Command(addons._example.Command):
-	def function(self, user_input):
-		smtpObj = smtplib.SMTP("smtp.gmail.com", 587)
-		smtpObj.ehlo()
-		smtpObj.starttls()
-		print("Введите вашу почту gmail:")
-		mylogin = input()
-		print("Введите ваш пароль:")
-		mypass = getpass()
-		if smtpObj.login(mylogin, mypass)[0] == 235:
-			print("Ввелите тему письма:")
-			subject = input()
-			print("Введите сообщение, которое вы хотите отправить:")
-			massage = input()
-			choice = 0
-			while choice != 1:
-				print("Ваше сообщение:")
-				print(massage)
-				print()
-				print("Вы довольны вашем сообщением? 1 - да, 0 - нет")
-				choice = int(input())
-			print("Введите почту получателя:")
-			reciever = input()
-			smtpObj.sendmail(mylogin, reciever, subject + "\n" + massage)
-			smtpObj.quit()
-		else:
-			print("Неверный логин/пароль.")
-		
 	name = "sendmail"
 	desc = "Позвляет отправлять почту с ящика Gmail."
+	def function(self, user_input):
+		print("Введите вашу почту gmail:")
+		mylogin = input()
+		mypass = getpass('Введите ваш пароль:')
+		print("Ввелите тему письма:")
+		subject = input()
+		print("Введите сообщение, которое вы хотите отправить:")
+		massage = input()
+		choice = 0
+		while choice != "Y" and choice != "y":
+			print("Ваше сообщение:")
+			print(massage)
+			print()
+			print("Вы довольны вашем сообщением? [Y/n]")
+			choice = input()
+		print("Введите почту получателя:")
+		reciever = input()
 
+		context = ssl.create_default_context()
+		try:
+			server = smtplib.SMTP("smtp.gmail.com", 587)
+			server.starttls(context=context)
+			server.login(mylogin, mypass)
+			fullmessage = "Subject: "+subject+"\n"+massage
+			server.sendmail(mylogin, reciever, fullmessage)
+		except Exception as error:
+			print(error)
+		finally:
+			server.quit()
