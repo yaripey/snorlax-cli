@@ -15,7 +15,7 @@ if __name__ == "__main__": # Главная функция
 	path = Path().absolute()
 
 	# Составляем список файлов в папке addons
-	onlyfiles = [f.name for f in Path(path/"addons").glob('[:alnum:]*.py')]
+	onlyfiles = [f.name for f in Path(path/"addons").glob('[a-z, A-Z, 0-9]*.py')]
 	print(onlyfiles)
 	
 	# Блок сбора словаря
