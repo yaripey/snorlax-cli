@@ -2,7 +2,7 @@
 import requests, json
 import addons._example
 class Command(addons._example.Command):
-	name = "weathercheck"
+	name = "weather"
 	desc = "Allows you to check current weather in the chosen city."
 	def function(self, user_input):
 		if len(user_input) < 1:
