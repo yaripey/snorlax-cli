@@ -1,3 +1,6 @@
+global path
+path = ""
+
 global commands
 commands = {}
 

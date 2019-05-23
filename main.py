@@ -7,46 +7,40 @@ if __name__ == "__main__": # Главная функция
 	# ------------------------
 
 	# Импортируем глобальные переменные
-	from globals import commands, User
+	from globals import commands, User, path
 	# Импортируем модули для работы с файлами:
-	from os import listdir
-	from os.path import isfile, join, dirname, abspath
-	print(dirname(abspath(__file__))+"\\addons")
+	from pathlib import Path
 
-	# Составляем список файлов в папке addons/
-	onlyfiles = [f for f in listdir(dirname(abspath(__file__))+"\\addons")]
+	#Получаем текущую директорию
+	path = Path().absolute()
 
+	# Составляем список файлов в папке addons
+	onlyfiles = [f.name for f in Path(path/"addons").glob('[:alnum:]*.py')]
+	print(onlyfiles)
+	
 	# Блок сбора словаря
 	for module in onlyfiles:
-		if module[-3:] != ".py":
-			# Если файл не заканчивается на .py - пропускаем его
-			continue
-		if module.startswith("_"):
-			# Если файл начинается с _ - пропускаем его
-			continue
-		
-		# module_name = module.split(".")
 		exec("import addons." + module[:-3])
 		exec("obj = addons." + module[:-3] + ".Command()")
 		commands[obj.name] = obj
-	print(commands)
+	# print(commands)
 
-	if isfile(join("snorlax-cli", "usersettings.py")):
-		print("Usersettings found successfully.")
+	if Path.exists(path/"usersettings"):
+			print("Usersettings found successfully.")
 	else:
-		print("I can't find the usersettings.py file, so it seems\nthat this is a first launch of the snorlax-cli. Let me gather some informaion about you, please.")
+		print("I can't find the usersettings file, so it seems\nthat this is a first launch of the snorlax-cli. Let me gather some informaion about you, please.")
 		print("What is your name?")
 		nameanswer = input()
 		print("What is your age?")
 		ageanswer = input()
-		f = open(join("snorlax-cli", "usersettings.py"), "a+")
+		f = open(path/"usersettings", "a+")
 		f.write(nameanswer)
 		f.write("\n")
 		f.write(ageanswer)
 		f.write("\n")
 		f.close()
 		
-	f = open(join("snorlax-cli", "usersettings.py"), "r")
+	f = open(path/"usersettings", "r")
 	filelines = f.readlines()
 	user = User(filelines[0], filelines[1])
 
