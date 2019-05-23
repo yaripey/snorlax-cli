@@ -1,7 +1,13 @@
+# Version 1.2
+
 if __name__ == "__main__": # Главная функция
 
+	# ------------------------
+	# Gathering commands block
+	# ------------------------
+
 	# Импортируем глобальные переменные
-	from globals import commands
+	from globals import commands, User
 	# Импортируем модули для работы с файлами:
 	from os import listdir
 	from os.path import isfile, join, dirname, abspath
@@ -25,7 +31,24 @@ if __name__ == "__main__": # Главная функция
 		commands[obj.name] = obj
 	print(commands)
 
-	# Блок тестирования
+	if isfile(join("snorlax-cli", "usersettings.py")):
+		print("Usersettings found successfully.")
+	else:
+		print("I can't find the usersettings.py file, so it seems\nthat this is a first launch of the snorlax-cli. Let me gather some informaion about you, please.")
+		print("What is your name?")
+		nameanswer = input()
+		print("What is your age?")
+		ageanswer = input()
+		f = open(join("snorlax-cli", "usersettings.py"), "a+")
+		f.write(nameanswer)
+		f.write("\n")
+		f.write(ageanswer)
+		f.write("\n")
+		f.close()
+		
+	f = open(join("snorlax-cli", "usersettings.py"), "r")
+	filelines = f.readlines()
+	user = User(filelines[0], filelines[1])
 
 	print("""
      ^ ^
@@ -36,11 +59,11 @@ if __name__ == "__main__": # Главная функция
 	print("===============")
 	print("  Snorlax CLI")
 	print("===============")
-	print("Здравствуй, путник! Как я могу тебе помочь?")
+	print("Greetings, " + user.name)
 
 	loop = True # Условие выхода из цикла
 	while loop: # Старт главного цикла
-		
+		print("Чем могу помочь?")
 		# Ответ пользователя
 		ask = str(input())
 		# Разбиваем его на список
